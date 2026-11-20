@@ -1,0 +1,14 @@
+.role-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  ion-card {
+    text-align: center;
+  }
+
+  .role-icon {
+    font-size: 48px;
+    color: var(--ion-color-primary);
+  }
+}

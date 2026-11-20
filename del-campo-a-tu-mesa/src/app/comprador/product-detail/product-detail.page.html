@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/comprador/catalog"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle del producto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="product">
+  <img
+    *ngIf="product.photoUrl"
+    [src]="product.photoUrl"
+    class="product-photo"
+    alt="{{ product.name }}"
+  />
+
+  <h1>{{ product.name }}</h1>
+  <p class="price">${{ product.price }}</p>
+  <p>Cantidad disponible: {{ product.quantityAvailable }}</p>
+  <p>Ubicación: {{ product.location }}</p>
+  <p>Categoría: {{ product.category }}</p>
+
+  <ion-text>
+    <p>{{ product.description }}</p>
+  </ion-text>
+
+  <ion-button expand="block" (click)="contactProducer()">
+    Contactar productor
+  </ion-button>
+</ion-content>

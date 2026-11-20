@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>¿Quién eres?</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="role-cards">
+    <ion-card button (click)="selectRole(UserRole.PRODUCTOR)">
+      <ion-card-header>
+        <ion-icon name="leaf-outline" class="role-icon"></ion-icon>
+        <ion-card-title>Soy Productor</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Publica tus productos agrícolas: nombre, precio, cantidad y ubicación.
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card button (click)="selectRole(UserRole.COMPRADOR)">
+      <ion-card-header>
+        <ion-icon name="basket-outline" class="role-icon"></ion-icon>
+        <ion-card-title>Soy Comprador</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Busca productos frescos y contacta directamente al productor.
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+</ion-content>

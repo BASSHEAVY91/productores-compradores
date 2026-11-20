@@ -1,0 +1,7 @@
+{
+  "name": "del-campo-a-tu-mesa",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

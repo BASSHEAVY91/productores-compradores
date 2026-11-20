@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/comprador/product-detail/' + (product?.id ?? '')"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Contactar productor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="producer">
+  <div class="producer-info">
+    <ion-icon name="person-circle-outline" class="producer-avatar"></ion-icon>
+    <h2>{{ producer.name }}</h2>
+    <p>{{ producer.location }}</p>
+  </div>
+
+  <ion-button
+    *ngIf="producer.contactMethod"
+    expand="block"
+    (click)="openContact()"
+  >
+    <ion-icon
+      [name]="producer.contactMethod.type === 'whatsapp' ? 'logo-whatsapp' :
+               producer.contactMethod.type === 'phone' ? 'call-outline' : 'mail-outline'"
+      slot="start"
+    ></ion-icon>
+    Contactar por {{ producer.contactMethod.type }}
+  </ion-button>
+
+  <ion-text color="medium" *ngIf="!producer.contactMethod">
+    <p>El productor no ha autorizado un medio de contacto.</p>
+  </ion-text>
+</ion-content>

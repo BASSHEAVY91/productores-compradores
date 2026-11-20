@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Catálogo</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      [(ngModel)]="searchTerm"
+      (ionInput)="onSearch()"
+      placeholder="Buscar producto"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-button fill="outline" size="small" (click)="goToFilters()">
+    <ion-icon name="options-outline" slot="start"></ion-icon>
+    Filtros
+  </ion-button>
+
+  <div class="categories">
+    <ion-chip *ngFor="let category of categories" (click)="filterByCategory(category)">
+      {{ category }}
+    </ion-chip>
+  </div>
+
+  <ion-list>
+    <ion-item *ngFor="let product of products" button (click)="openDetail(product)">
+      <ion-label>
+        <h2>{{ product.name }}</h2>
+        <p>${{ product.price }} · {{ product.location }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div class="empty-state" *ngIf="!loading && products.length === 0">
+    <ion-icon name="search-outline"></ion-icon>
+    <p>No se encontraron productos.</p>
+  </div>
+</ion-content>
