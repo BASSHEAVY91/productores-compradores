@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from '../../core/services/product.service';
 import { SessionService } from '../../core/services/session.service';
@@ -19,7 +19,8 @@ export class HomePage implements OnInit {
     private readonly productService: ProductService,
     private readonly session: SessionService,
     private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +40,7 @@ export class HomePage implements OnInit {
     this.productService.getMyProducts(user.id).subscribe((products) => {
       this.products = products;
       this.loading = false;
+      this.cdr.markForCheck();
     });
   }
 
@@ -47,11 +49,19 @@ export class HomePage implements OnInit {
   }
 
   edit(product: Product): void {
-    this.router.navigate(['/productor/product-form'], { queryParams: { id: product.id } });
+    this.router.navigate(['/productor/product-form'], {
+      queryParams: { id: product.id },
+    });
   }
 
   deactivate(product: Product): void {
-    this.productService.deactivate(product).subscribe(() => this.loadProducts());
+    this.productService
+      .deactivate(product)
+      .subscribe(() => this.loadProducts());
+  }
+
+  goToProfile(): void {
+    this.router.navigate(['/productor/profile']);
   }
 
   logout(): void {
