@@ -5,6 +5,23 @@
   margin-bottom: 8px;
 }
 
+.filter-count {
+  margin-left: 6px;
+}
+
+.active-filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px 8px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background: var(--ion-color-light);
+  font-size: 0.85rem;
+}
+
 .empty-state {
   display: flex;
   flex-direction: column;

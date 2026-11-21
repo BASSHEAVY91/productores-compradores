@@ -2,4 +2,13 @@
   display: flex;
   gap: 8px;
   margin-top: 24px;
+
+  ion-button {
+    flex: 1;
+  }
+}
+
+.error {
+  font-size: 0.85rem;
+  margin: 8px 16px 0;
 }

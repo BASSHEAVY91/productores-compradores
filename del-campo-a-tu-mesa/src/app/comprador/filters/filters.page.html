@@ -1,33 +1,55 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/comprador/catalog"></ion-back-button>
+    </ion-buttons>
     <ion-title>Filtros</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <ion-item>
-    <ion-label position="floating">Categoría</ion-label>
-    <ion-select [(ngModel)]="filter.category">
-      <ion-select-option *ngFor="let category of categories" [value]="category">
-        {{ category }}
+    <ion-select label="Categoría" placeholder="Todas" [(ngModel)]="category">
+      <ion-select-option [value]="undefined">Todas</ion-select-option>
+      <ion-select-option *ngFor="let item of categories" [value]="item">
+        {{ item }}
       </ion-select-option>
     </ion-select>
   </ion-item>
 
   <ion-item>
-    <ion-label position="floating">Ubicación</ion-label>
-    <ion-input type="text" [(ngModel)]="filter.location"></ion-input>
+    <ion-input
+      label="Ubicación (municipio)"
+      labelPlacement="floating"
+      type="text"
+      placeholder="Ej: Tunja"
+      [(ngModel)]="location"
+    ></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label position="floating">Precio mínimo</ion-label>
-    <ion-input type="number" [(ngModel)]="filter.minPrice"></ion-input>
+    <ion-input
+      label="Precio mínimo"
+      labelPlacement="floating"
+      type="number"
+      inputmode="numeric"
+      [(ngModel)]="minPrice"
+    ></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label position="floating">Precio máximo</ion-label>
-    <ion-input type="number" [(ngModel)]="filter.maxPrice"></ion-input>
+    <ion-input
+      label="Precio máximo"
+      labelPlacement="floating"
+      type="number"
+      inputmode="numeric"
+      [(ngModel)]="maxPrice"
+    ></ion-input>
   </ion-item>
+
+  <ion-text color="danger" *ngIf="errorMessage">
+    <p class="error">{{ errorMessage }}</p>
+  </ion-text>
 
   <div class="actions">
     <ion-button expand="block" fill="outline" (click)="clear()">Limpiar</ion-button>
