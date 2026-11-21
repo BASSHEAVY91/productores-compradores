@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/productor/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mi perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <ion-item>
+      <ion-label position="floating">Nombre o finca</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Ubicación (municipio / vereda)</ion-label>
+      <ion-input type="text" formControlName="location"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Medio de contacto</ion-label>
+      <ion-select formControlName="contactType">
+        <ion-select-option
+          *ngFor="let type of contactTypes"
+          [value]="type.value"
+        >
+          {{ type.label }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">
+        {{ form.value.contactType === 'email' ? 'Correo electrónico' : 'Número
+        de celular' }}
+      </ion-label>
+      <ion-input
+        [type]="form.value.contactType === 'email' ? 'email' : 'tel'"
+        formControlName="contactValue"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" class="ion-margin-top">
+      <ion-checkbox formControlName="authorizeContact" labelPlacement="end">
+        Autorizo mostrar este medio de contacto a los compradores (Ley 1581 de
+        2012).
+      </ion-checkbox>
+    </ion-item>
+
+    <ion-text color="danger" *ngIf="form.touched && form.invalid">
+      <p class="error">Completa todos los campos y acepta la autorización.</p>
+    </ion-text>
+
+    <ion-button
+      expand="block"
+      type="submit"
+      class="ion-margin-top"
+      [disabled]="saving"
+    >
+      Guardar perfil
+    </ion-button>
+  </form>
+</ion-content>

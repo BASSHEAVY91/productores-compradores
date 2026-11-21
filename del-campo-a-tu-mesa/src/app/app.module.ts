@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, inject, provideAppInitializer } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { AuthRepository } from './core/repositories/auth-repository.interface';
 import { LocalStorageAuthRepository } from './core/repositories/local-storage-auth.repository';
 import { ProductRepository } from './core/repositories/product-repository.interface';
 import { LocalStorageProductRepository } from './core/repositories/local-storage-product.repository';
+import { SeedService } from './core/services/seed.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,8 @@ import { LocalStorageProductRepository } from './core/repositories/local-storage
     // implementaciones concretas en un único punto de composición.
     { provide: AuthRepository, useClass: LocalStorageAuthRepository },
     { provide: ProductRepository, useClass: LocalStorageProductRepository },
+    // Carga los datos de demostración la primera vez que se abre la app.
+    provideAppInitializer(() => inject(SeedService).seedIfNeeded()),
   ],
   bootstrap: [AppComponent],
 })
