@@ -21,6 +21,10 @@ export class LocalStorageAuthRepository extends AuthRepository {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
   }
 
+  getById(id: string): Observable<User | undefined> {
+    return of(this.readAll().find((u) => u.id === id));
+  }
+
   getByEmail(email: string): Observable<User | undefined> {
     const users = this.readAll();
     return of(users.find((u) => u.email.toLowerCase() === email.toLowerCase()));

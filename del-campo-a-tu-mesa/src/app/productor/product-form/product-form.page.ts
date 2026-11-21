@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../core/services/product.service';
 import { SessionService } from '../../core/services/session.service';
+import { PhotoService } from '../../core/services/photo.service';
 import { Product, ProductCategory } from '../../core/models/product.model';
 
 @Component({
@@ -31,8 +32,30 @@ export class ProductFormPage implements OnInit {
     private readonly productService: ProductService,
     private readonly session: SessionService,
     private readonly route: ActivatedRoute,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly photoService: PhotoService,
+    private readonly cdr: ChangeDetectorRef
   ) {}
+
+  async takePhoto(): Promise<void> {
+    this.setPhoto(await this.photoService.takePhoto());
+  }
+
+  async chooseFromGallery(): Promise<void> {
+    this.setPhoto(await this.photoService.chooseFromGallery());
+  }
+
+  removePhoto(): void {
+    this.form.patchValue({ photoUrl: '' });
+  }
+
+  private setPhoto(dataUrl: string | null): void {
+    if (dataUrl) {
+      this.form.patchValue({ photoUrl: dataUrl });
+      // La app no usa zone.js: se avisa a Angular que redibuje la vista previa.
+      this.cdr.markForCheck();
+    }
+  }
 
   ngOnInit(): void {
     const id = this.route.snapshot.queryParamMap.get('id');

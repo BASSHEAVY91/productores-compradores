@@ -18,7 +18,7 @@ export const DEMO_PASSWORD = 'demo123';
  * Reemplazar por el número (con indicativo 57) de un integrante del grupo
  * que acepte recibir mensajes de prueba.
  */
-const DEMO_WHATSAPP = '570000000000';
+const DEMO_WHATSAPP = '573183313820';
 
 const WIKIMEDIA = 'https://upload.wikimedia.org/wikipedia/commons/thumb/';
 
@@ -89,13 +89,15 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     category: ProductCategory.FRUTAS,
     location: 'Fusagasugá, Cundinamarca',
     photoUrl:
-      WIKIMEDIA + 'a/a3/Soursop%2C_Annona_muricata.jpg/960px-Soursop%2C_Annona_muricata.jpg',
+      WIKIMEDIA +
+      'a/a3/Soursop%2C_Annona_muricata.jpg/960px-Soursop%2C_Annona_muricata.jpg',
   },
   {
     id: 'demo-prod-naranja',
     producerId: 'demo-productor-1',
     name: 'Naranja tangelo',
-    description: 'Naranja jugosa recién cosechada, perfecta para jugo natural. Precio por kilo.',
+    description:
+      'Naranja jugosa recién cosechada, perfecta para jugo natural. Precio por kilo.',
     price: 2500,
     quantityAvailable: 200,
     category: ProductCategory.FRUTAS,
@@ -108,13 +110,15 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     id: 'demo-prod-platano',
     producerId: 'demo-productor-1',
     name: 'Plátano verde',
-    description: 'Plátano hartón verde, ideal para patacones y sopas. Precio por kilo.',
+    description:
+      'Plátano hartón verde, ideal para patacones y sopas. Precio por kilo.',
     price: 2800,
     quantityAvailable: 150,
     category: ProductCategory.VERDURAS,
     location: 'Fusagasugá, Cundinamarca',
     photoUrl:
-      WIKIMEDIA + '3/3f/PlatanosVerdesBarranquilla.jpg/960px-PlatanosVerdesBarranquilla.jpg',
+      WIKIMEDIA +
+      '3/3f/PlatanosVerdesBarranquilla.jpg/960px-PlatanosVerdesBarranquilla.jpg',
   },
 
   // Asociación Campesina de Ubaté
@@ -122,23 +126,29 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     id: 'demo-prod-queso',
     producerId: 'demo-productor-2',
     name: 'Queso campesino',
-    description: 'Queso campesino fresco, hecho en finca con leche del día. Precio por libra.',
+    description:
+      'Queso campesino fresco, hecho en finca con leche del día. Precio por libra.',
     price: 9000,
     quantityAvailable: 25,
     category: ProductCategory.LACTEOS,
     location: 'Ubaté, Cundinamarca',
-    photoUrl: WIKIMEDIA + 'c/c5/Queso_Criollo_campesino.jpg/960px-Queso_Criollo_campesino.jpg',
+    photoUrl:
+      WIKIMEDIA +
+      'c/c5/Queso_Criollo_campesino.jpg/960px-Queso_Criollo_campesino.jpg',
   },
   {
     id: 'demo-prod-huevos',
     producerId: 'demo-productor-2',
     name: 'Huevos campesinos',
-    description: 'Huevos de gallina criolla de pastoreo. Precio por cubeta de 30 unidades.',
+    description:
+      'Huevos de gallina criolla de pastoreo. Precio por cubeta de 30 unidades.',
     price: 18000,
     quantityAvailable: 40,
     category: ProductCategory.OTROS,
     location: 'Ubaté, Cundinamarca',
-    photoUrl: WIKIMEDIA + 'd/dd/Eggs_in_basket_2020_G1.jpg/960px-Eggs_in_basket_2020_G1.jpg',
+    photoUrl:
+      WIKIMEDIA +
+      'd/dd/Eggs_in_basket_2020_G1.jpg/960px-Eggs_in_basket_2020_G1.jpg',
   },
   {
     id: 'demo-prod-papa',
@@ -158,7 +168,8 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     id: 'demo-prod-mora',
     producerId: 'demo-productor-3',
     name: 'Mora de Castilla',
-    description: 'Mora de Castilla fresca, dulce y ácida. Ideal para jugos y mermeladas. Precio por kilo.',
+    description:
+      'Mora de Castilla fresca, dulce y ácida. Ideal para jugos y mermeladas. Precio por kilo.',
     price: 6000,
     quantityAvailable: 40,
     category: ProductCategory.FRUTAS,
@@ -169,7 +180,8 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     id: 'demo-prod-aguacate',
     producerId: 'demo-productor-3',
     name: 'Aguacate Hass',
-    description: 'Aguacate Hass de pulpa cremosa, listo para consumir en 2 a 3 días. Precio por kilo.',
+    description:
+      'Aguacate Hass de pulpa cremosa, listo para consumir en 2 a 3 días. Precio por kilo.',
     price: 7000,
     quantityAvailable: 60,
     category: ProductCategory.FRUTAS,
@@ -182,7 +194,8 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     id: 'demo-prod-panela',
     producerId: 'demo-productor-3',
     name: 'Panela',
-    description: 'Panela de caña de trapiche tradicional, sin químicos. Precio por bloque de 500 g.',
+    description:
+      'Panela de caña de trapiche tradicional, sin químicos. Precio por bloque de 500 g.',
     price: 3000,
     quantityAvailable: 120,
     category: ProductCategory.OTROS,

@@ -7,6 +7,7 @@ import { User } from '../models/user.model';
  * de autenticación dependen de esta interfaz, no de una implementación concreta.
  */
 export abstract class AuthRepository {
+  abstract getById(id: string): Observable<User | undefined>;
   abstract getByEmail(email: string): Observable<User | undefined>;
   abstract create(user: User): Observable<User>;
   abstract update(user: User): Observable<User>;

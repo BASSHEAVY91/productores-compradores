@@ -1,7 +1,11 @@
 .product-photo {
+  display: block;
   width: 100%;
+  max-width: 480px;
+  height: 220px;
+  margin: 0 auto 16px;
+  object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 16px;
 }
 
 .price {

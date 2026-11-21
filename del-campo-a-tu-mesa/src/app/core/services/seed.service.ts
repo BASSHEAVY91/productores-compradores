@@ -4,7 +4,13 @@ import { ProductRepository } from '../repositories/product-repository.interface'
 import { DEMO_PASSWORD, SEED_PRODUCTS, SEED_USERS } from '../data/seed-data';
 import { simpleHash } from '../utils/hash.util';
 
-const SEED_FLAG_KEY = 'dctm_seed_v1';
+/**
+ * Versión de los datos de demostración. Si se cambia algo en seed-data.ts
+ * (por ejemplo el número de WhatsApp), subir este número para que los
+ * dispositivos que ya tenían los datos reciban la actualización.
+ */
+const SEED_VERSION = 2;
+const SEED_FLAG_KEY = 'dctm_seed_version';
 
 /**
  * Responsabilidad única: cargar los datos de demostración una sola vez
@@ -20,7 +26,8 @@ export class SeedService {
   ) {}
 
   seedIfNeeded(): void {
-    if (localStorage.getItem(SEED_FLAG_KEY)) {
+    const savedVersion = Number(localStorage.getItem(SEED_FLAG_KEY) ?? 0);
+    if (savedVersion >= SEED_VERSION) {
       return;
     }
 
@@ -30,6 +37,10 @@ export class SeedService {
           this.authRepository
             .create({ ...seedUser, passwordHash: simpleHash(DEMO_PASSWORD) })
             .subscribe();
+        } else if (existing.id === seedUser.id) {
+          // Cuenta de demostración ya existente: se actualizan sus datos
+          // (nombre, ubicación, contacto) conservando la contraseña.
+          this.authRepository.update({ ...existing, ...seedUser }).subscribe();
         }
       });
     }
@@ -45,6 +56,6 @@ export class SeedService {
       });
     }
 
-    localStorage.setItem(SEED_FLAG_KEY, createdAt);
+    localStorage.setItem(SEED_FLAG_KEY, String(SEED_VERSION));
   }
 }
