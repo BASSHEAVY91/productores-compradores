@@ -10,18 +10,25 @@
 <ion-content class="ion-padding">
   <form [formGroup]="form" (ngSubmit)="save()">
     <ion-item>
-      <ion-label position="floating">Nombre o finca</ion-label>
-      <ion-input type="text" formControlName="name"></ion-input>
+      <ion-input
+        label="Nombre o finca"
+        labelPlacement="floating"
+        type="text"
+        formControlName="name"
+      ></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Ubicación (municipio / vereda)</ion-label>
-      <ion-input type="text" formControlName="location"></ion-input>
+      <ion-input
+        label="Ubicación (municipio / vereda)"
+        labelPlacement="floating"
+        type="text"
+        formControlName="location"
+      ></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label>Medio de contacto</ion-label>
-      <ion-select formControlName="contactType">
+      <ion-select label="Medio de contacto" formControlName="contactType">
         <ion-select-option
           *ngFor="let type of contactTypes"
           [value]="type.value"
@@ -32,11 +39,9 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">
-        {{ form.value.contactType === 'email' ? 'Correo electrónico' : 'Número
-        de celular' }}
-      </ion-label>
       <ion-input
+        [label]="form.value.contactType === 'email' ? 'Correo electrónico' : 'Número de celular (con 57)'"
+        labelPlacement="floating"
         [type]="form.value.contactType === 'email' ? 'email' : 'tel'"
         formControlName="contactValue"
       ></ion-input>

@@ -11,6 +11,7 @@ import { LocalStorageAuthRepository } from './core/repositories/local-storage-au
 import { ProductRepository } from './core/repositories/product-repository.interface';
 import { LocalStorageProductRepository } from './core/repositories/local-storage-product.repository';
 import { SeedService } from './core/services/seed.service';
+import { AuthService } from './core/services/auth.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,8 @@ import { SeedService } from './core/services/seed.service';
     { provide: ProductRepository, useClass: LocalStorageProductRepository },
     // Carga los datos de demostración la primera vez que se abre la app.
     provideAppInitializer(() => inject(SeedService).seedIfNeeded()),
+    // Recupera la sesión guardada para no pedir login al recargar o reabrir.
+    provideAppInitializer(() => inject(AuthService).restoreSession()),
   ],
   bootstrap: [AppComponent],
 })

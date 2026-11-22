@@ -81,6 +81,24 @@ export class AuthService {
     );
   }
 
+  /**
+   * Recupera la sesión guardada al abrir o recargar la app, para que el
+   * usuario no tenga que iniciar sesión cada vez (RNF2, usabilidad).
+   */
+  restoreSession(): void {
+    const storedId = this.session.getStoredUserId();
+    if (!storedId) {
+      return;
+    }
+    this.authRepository.getById(storedId).subscribe((user) => {
+      if (user) {
+        this.session.restore(user);
+      } else {
+        this.session.end();
+      }
+    });
+  }
+
   logout(): void {
     this.session.end();
   }

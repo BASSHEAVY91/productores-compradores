@@ -16,8 +16,12 @@
 
   <form [formGroup]="form" (ngSubmit)="submit()" class="ion-margin-top">
     <ion-item *ngIf="mode === 'register'">
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input type="text" formControlName="name"></ion-input>
+      <ion-input
+        label="Nombre"
+        labelPlacement="floating"
+        type="text"
+        formControlName="name"
+      ></ion-input>
     </ion-item>
 
     <ion-item>

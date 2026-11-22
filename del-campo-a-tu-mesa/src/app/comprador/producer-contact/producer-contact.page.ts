@@ -38,6 +38,31 @@ export class ProducerContactPage implements OnInit {
     });
   }
 
+  /** Texto del botón según el medio de contacto autorizado. */
+  get contactLabel(): string {
+    switch (this.producer?.contactMethod?.type) {
+      case 'whatsapp':
+        return 'Escribir por WhatsApp';
+      case 'phone':
+        return 'Llamar al productor';
+      case 'email':
+        return 'Enviar correo';
+      default:
+        return 'Contactar productor';
+    }
+  }
+
+  get contactIcon(): string {
+    switch (this.producer?.contactMethod?.type) {
+      case 'whatsapp':
+        return 'logo-whatsapp';
+      case 'phone':
+        return 'call-outline';
+      default:
+        return 'mail-outline';
+    }
+  }
+
   openContact(): void {
     if (this.producer?.contactMethod) {
       this.contactService.open(this.producer.contactMethod);

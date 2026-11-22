@@ -1,0 +1,31 @@
+.photo-section {
+  margin: 16px 0 8px;
+  padding: 0 16px;
+}
+
+.photo-title {
+  margin: 0 0 8px;
+  color: var(--ion-color-medium);
+  font-size: 0.9rem;
+}
+
+.photo-preview {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.photo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.error {
+  font-size: 0.85rem;
+  margin: 8px 16px 0;
+}

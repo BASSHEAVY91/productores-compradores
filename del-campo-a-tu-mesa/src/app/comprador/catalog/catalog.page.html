@@ -20,16 +20,33 @@
   <ion-button fill="outline" size="small" (click)="goToFilters()">
     <ion-icon name="options-outline" slot="start"></ion-icon>
     Filtros
+    <ion-badge *ngIf="filters.activeCount > 0" class="filter-count">
+      {{ filters.activeCount }}
+    </ion-badge>
   </ion-button>
 
   <div class="categories">
-    <ion-chip *ngFor="let category of categories" (click)="filterByCategory(category)">
-      {{ category }}
+    <ion-chip
+      *ngFor="let category of categories"
+      [color]="isActiveCategory(category) ? 'primary' : undefined"
+      [outline]="!isActiveCategory(category)"
+      (click)="toggleCategory(category)"
+    >
+      <ion-icon *ngIf="isActiveCategory(category)" name="checkmark"></ion-icon>
+      <ion-label>{{ category }}</ion-label>
     </ion-chip>
+  </div>
+
+  <div class="active-filters" *ngIf="activeFiltersText">
+    <span>Filtrando por: {{ activeFiltersText }}</span>
+    <ion-button fill="clear" size="small" (click)="clearFilters()">Quitar filtros</ion-button>
   </div>
 
   <ion-list>
     <ion-item *ngFor="let product of products" button (click)="openDetail(product)">
+      <ion-thumbnail slot="start" *ngIf="product.photoUrl">
+        <img [src]="product.photoUrl" [alt]="product.name" />
+      </ion-thumbnail>
       <ion-label>
         <h2>{{ product.name }}</h2>
         <p>${{ product.price }} · {{ product.location }}</p>
@@ -40,5 +57,8 @@
   <div class="empty-state" *ngIf="!loading && products.length === 0">
     <ion-icon name="search-outline"></ion-icon>
     <p>No se encontraron productos.</p>
+    <ion-button fill="clear" *ngIf="filters.activeCount > 0" (click)="clearFilters()">
+      Quitar filtros
+    </ion-button>
   </div>
 </ion-content>

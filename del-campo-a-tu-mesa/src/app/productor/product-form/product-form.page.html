@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/productor/home"></ion-back-button>
+    </ion-buttons>
     <ion-title>{{ editingProduct ? 'Editar producto' : 'Publicar producto' }}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -7,28 +10,43 @@
 <ion-content class="ion-padding">
   <form [formGroup]="form" (ngSubmit)="save()">
     <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input type="text" formControlName="name"></ion-input>
+      <ion-input
+        label="Nombre"
+        labelPlacement="floating"
+        type="text"
+        formControlName="name"
+      ></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Descripción</ion-label>
-      <ion-textarea formControlName="description"></ion-textarea>
+      <ion-textarea
+        label="Descripción"
+        labelPlacement="floating"
+        [autoGrow]="true"
+        formControlName="description"
+      ></ion-textarea>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Precio</ion-label>
-      <ion-input type="number" formControlName="price"></ion-input>
+      <ion-input
+        label="Precio"
+        labelPlacement="floating"
+        type="number"
+        formControlName="price"
+      ></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Cantidad disponible</ion-label>
-      <ion-input type="number" formControlName="quantityAvailable"></ion-input>
+      <ion-input
+        label="Cantidad disponible"
+        labelPlacement="floating"
+        type="number"
+        formControlName="quantityAvailable"
+      ></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label>Categoría</ion-label>
-      <ion-select formControlName="category">
+      <ion-select label="Categoría" formControlName="category">
         <ion-select-option *ngFor="let category of categories" [value]="category">
           {{ category }}
         </ion-select-option>
@@ -36,14 +54,48 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Ubicación</ion-label>
-      <ion-input type="text" formControlName="location"></ion-input>
+      <ion-input
+        label="Ubicación"
+        labelPlacement="floating"
+        type="text"
+        formControlName="location"
+      ></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">URL de foto (opcional)</ion-label>
-      <ion-input type="text" formControlName="photoUrl"></ion-input>
-    </ion-item>
+    <!-- Foto del producto (RF5): cámara o galería del dispositivo -->
+    <div class="photo-section">
+      <p class="photo-title">Foto del producto (opcional)</p>
+
+      <img
+        *ngIf="form.value.photoUrl"
+        [src]="form.value.photoUrl"
+        class="photo-preview"
+        alt="Foto del producto"
+      />
+
+      <div class="photo-actions">
+        <ion-button fill="outline" (click)="takePhoto()">
+          <ion-icon name="camera-outline" slot="start"></ion-icon>
+          Tomar foto
+        </ion-button>
+        <ion-button fill="outline" (click)="chooseFromGallery()">
+          <ion-icon name="image-outline" slot="start"></ion-icon>
+          Galería
+        </ion-button>
+        <ion-button
+          *ngIf="form.value.photoUrl"
+          fill="clear"
+          color="danger"
+          (click)="removePhoto()"
+        >
+          Quitar
+        </ion-button>
+      </div>
+    </div>
+
+    <ion-text color="danger" *ngIf="form.touched && form.invalid">
+      <p class="error">Completa todos los campos obligatorios.</p>
+    </ion-text>
 
     <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="saving">
       Guardar

@@ -6,6 +6,18 @@ import { Product, ProductFilter } from '../models/product.model';
 const STORAGE_KEY = 'dctm_products';
 
 /**
+ * Pasa el texto a minúsculas y le quita las tildes, para que buscar
+ * "guanabana" encuentre "Guanábana" y "fusagasuga" encuentre "Fusagasugá".
+ */
+function normalize(text: string): string {
+  return text
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
+/**
  * Implementación concreta de ProductRepository usando localStorage.
  * Responsabilidad única: persistencia y consulta de productos en el dispositivo.
  */
@@ -36,15 +48,15 @@ export class LocalStorageProductRepository extends ProductRepository {
     let results = this.readAll().filter((p) => p.active);
 
     if (filter.name) {
-      const term = filter.name.toLowerCase();
-      results = results.filter((p) => p.name.toLowerCase().includes(term));
+      const term = normalize(filter.name);
+      results = results.filter((p) => normalize(p.name).includes(term));
     }
     if (filter.category) {
       results = results.filter((p) => p.category === filter.category);
     }
     if (filter.location) {
-      const loc = filter.location.toLowerCase();
-      results = results.filter((p) => p.location.toLowerCase().includes(loc));
+      const loc = normalize(filter.location);
+      results = results.filter((p) => normalize(p.location).includes(loc));
     }
     if (filter.minPrice != null) {
       results = results.filter((p) => p.price >= filter.minPrice!);

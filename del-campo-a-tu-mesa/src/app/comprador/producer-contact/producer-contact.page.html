@@ -19,12 +19,8 @@
     expand="block"
     (click)="openContact()"
   >
-    <ion-icon
-      [name]="producer.contactMethod.type === 'whatsapp' ? 'logo-whatsapp' :
-               producer.contactMethod.type === 'phone' ? 'call-outline' : 'mail-outline'"
-      slot="start"
-    ></ion-icon>
-    Contactar por {{ producer.contactMethod.type }}
+    <ion-icon [name]="contactIcon" slot="start"></ion-icon>
+    {{ contactLabel }}
   </ion-button>
 
   <ion-text color="medium" *ngIf="!producer.contactMethod">
