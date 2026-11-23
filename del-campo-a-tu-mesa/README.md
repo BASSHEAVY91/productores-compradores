@@ -11,7 +11,7 @@ funcionales definidos en el documento de diseño (Entrega 1).
 ## Stack tecnológico
 
 - **Ionic 9** + **Angular 22** (NgModules, lazy loading por página)
-- **Capacitor 7** (empaquetado nativo Android/iOS)
+- **Capacitor 8** (empaquetado nativo Android/iOS)
 - Persistencia **local (localStorage)** — arquitectura *standalone*, sin backend externo
 - Node 22 / npm 10
 
@@ -23,18 +23,23 @@ src/app/
 │   ├── models/                  # Entidades e interfaces de datos
 │   │   ├── user.model.ts
 │   │   ├── product.model.ts
+│   │   ├── order.model.ts
 │   │   └── role.enum.ts
 │   ├── repositories/            # Abstracciones (puertos) + implementaciones
 │   │   ├── auth-repository.interface.ts        (abstracción)
 │   │   ├── product-repository.interface.ts     (abstracción)
 │   │   ├── local-storage-auth.repository.ts    (implementación concreta)
-│   │   └── local-storage-product.repository.ts (implementación concreta)
+│   │   ├── local-storage-product.repository.ts (implementación concreta)
+│   │   ├── order-repository.interface.ts       (abstracción)
+│   │   └── local-storage-order.repository.ts   (implementación concreta)
 │   ├── services/                # Lógica de negocio (casos de uso)
 │   │   ├── auth.service.ts
 │   │   ├── product.service.ts
 │   │   ├── session.service.ts
 │   │   ├── contact.service.ts
-│   │   └── producer-lookup.service.ts
+│   │   ├── producer-lookup.service.ts
+│   │   ├── order.service.ts
+│   │   └── payment-gateway.ts   (PaymentGateway + SimulatedPaymentGateway)
 │   ├── guards/                  # Control de acceso por ruta
 │   │   ├── auth.guard.ts
 │   │   └── role.guard.ts
@@ -51,7 +56,9 @@ src/app/
     ├── catalog/                 # P5 - Home Comprador (catálogo)
     ├── filters/                 # P6 - Búsqueda y filtros
     ├── product-detail/          # P7 - Detalle de producto
-    └── producer-contact/        # P8 - Perfil del productor / Contacto
+    ├── producer-contact/        # P8 - Perfil del productor / Contacto
+    ├── checkout/                # P9 - Pago simulado
+    └── purchases/               # P10 - Mis compras
 ```
 
 ### Cómo se aplican los principios SOLID
@@ -76,7 +83,7 @@ src/app/
   abstracción e implementación se resuelve en un único punto de composición:
   `app.module.ts` (`providers`).
 
-## Flujo de navegación (P0 → P8)
+## Flujo de navegación (P0 → P10)
 
 | Código | Pantalla | Ruta |
 |---|---|---|
@@ -89,6 +96,8 @@ src/app/
 | P6 | Búsqueda y filtros | `/comprador/filters` |
 | P7 | Detalle de producto | `/comprador/product-detail/:id` |
 | P8 | Perfil del productor / Contacto | `/comprador/producer-contact/:id` |
+| P9 | Pago simulado | `/comprador/checkout/:id` |
+| P10 | Mis compras | `/comprador/purchases` |
 
 El acceso a `/productor/*` y `/comprador/*` está protegido por `AuthGuard` (sesión activa)
 y `RoleGuard` (rol correspondiente), implementando RF1 y RNF3.
@@ -100,6 +109,19 @@ y `RoleGuard` (rol correspondiente), implementando RF1 y RNF3.
 - RF5, RF6, RF7 — Publicar, editar y desactivar productos.
 - RF8, RF9 — Consultar catálogo y buscar/filtrar por nombre, categoría, ubicación y precio.
 - RF10, RF11 — Ver detalle del producto y contactar al productor (WhatsApp/llamada/correo).
+- Pago simulado — el comprador elige cantidad y medio de pago (Nequi, PSE, tarjeta o
+  contraentrega), la app simula el cobro, genera un pedido con número de referencia,
+  descuenta el inventario del producto y lo muestra en *Mis compras* (P10).
+
+### Pago simulado y SOLID
+
+- `PaymentGateway` es una abstracción; `SimulatedPaymentGateway` es la implementación
+  usada en este prototipo (no cobra dinero real ni pide datos bancarios). Se enlaza en
+  `app.module.ts`, así que una pasarela real (Wompi, PayU…) se podría conectar sin
+  modificar `OrderService` (Abierto/Cerrado + Inversión de Dependencias).
+- `OrderService` solo contiene las reglas de la compra (validar cantidad, cobrar,
+  registrar pedido, descontar inventario) y `LocalStorageOrderRepository` solo
+  persiste los pedidos (Responsabilidad única).
 
 ## Scripts
 
