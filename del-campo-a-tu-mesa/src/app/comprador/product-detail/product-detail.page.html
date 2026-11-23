@@ -25,7 +25,16 @@
     <p>{{ product.description }}</p>
   </ion-text>
 
-  <ion-button expand="block" (click)="contactProducer()">
+  <ion-button
+    expand="block"
+    (click)="buy()"
+    [disabled]="!product.active || product.quantityAvailable < 1"
+  >
+    <ion-icon name="cart-outline" slot="start"></ion-icon>
+    {{ product.quantityAvailable > 0 ? 'Comprar' : 'Agotado' }}
+  </ion-button>
+
+  <ion-button expand="block" fill="outline" (click)="contactProducer()">
     Contactar productor
   </ion-button>
 </ion-content>

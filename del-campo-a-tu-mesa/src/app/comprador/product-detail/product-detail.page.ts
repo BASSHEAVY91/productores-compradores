@@ -27,6 +27,12 @@ export class ProductDetailPage implements OnInit {
     }
   }
 
+  buy(): void {
+    if (this.product) {
+      this.router.navigate(['/comprador/checkout', this.product.id]);
+    }
+  }
+
   contactProducer(): void {
     if (this.product) {
       this.router.navigate(['/comprador/producer-contact', this.product.id]);
