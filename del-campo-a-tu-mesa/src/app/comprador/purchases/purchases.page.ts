@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { OrderService } from '../../core/services/order.service';
 import { SessionService } from '../../core/services/session.service';
 import { Order, OrderStatus, PAYMENT_METHOD_LABELS } from '../../core/models/order.model';
@@ -18,6 +18,7 @@ export class PurchasesPage {
   constructor(
     private readonly orderService: OrderService,
     private readonly session: SessionService,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   /** Se recarga cada vez que se entra a la pantalla (Ionic reutiliza páginas). */
@@ -26,6 +27,7 @@ export class PurchasesPage {
     if (buyer) {
       this.orderService.getMyPurchases(buyer.id).subscribe((orders) => {
         this.orders = orders;
+        this.cdr.markForCheck();
       });
     }
   }

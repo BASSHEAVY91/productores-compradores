@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../core/services/product.service';
 import { OrderService } from '../../core/services/order.service';
@@ -35,6 +35,7 @@ export class CheckoutPage implements OnInit {
     private readonly productService: ProductService,
     private readonly orderService: OrderService,
     private readonly session: SessionService,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +43,7 @@ export class CheckoutPage implements OnInit {
     if (id) {
       this.productService.getById(id).subscribe((product) => {
         this.product = product ?? null;
+        this.cdr.markForCheck();
       });
     }
   }
@@ -70,10 +72,13 @@ export class CheckoutPage implements OnInit {
           } else {
             this.errorMessage = result.payment.message;
           }
+          // La app es zoneless: hay que avisarle a Angular que refresque la vista.
+          this.cdr.markForCheck();
         },
         error: (err: Error) => {
           this.processing = false;
           this.errorMessage = err.message;
+          this.cdr.markForCheck();
         },
       });
   }
