@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/comprador/catalog"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mis compras</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <p *ngIf="orders.length === 0">Todavía no has hecho compras.</p>
+
+  <ion-list>
+    <ion-item *ngFor="let order of orders">
+      <ion-label>
+        <h2>{{ order.productName }} × {{ order.quantity }}</h2>
+        <p>Ref. {{ order.reference }} · {{ order.createdAt | date: 'dd/MM/yyyy HH:mm' }}</p>
+        <p>{{ labels[order.paymentMethod] }}</p>
+      </ion-label>
+      <div slot="end" class="right">
+        <strong>{{ order.total | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</strong>
+        <ion-badge [color]="order.status === OrderStatus.PAGADO ? 'success' : 'warning'">
+          {{ order.status === OrderStatus.PAGADO ? 'Pagado' : 'Pago contraentrega' }}
+        </ion-badge>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

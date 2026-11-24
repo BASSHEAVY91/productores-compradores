@@ -101,6 +101,26 @@ const routes: Routes = [
         (m) => m.ProducerContactPageModule,
       ),
   },
+  // P9 - Pago simulado
+  {
+    path: 'comprador/checkout/:id',
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: UserRole.COMPRADOR },
+    loadChildren: () =>
+      import('./comprador/checkout/checkout.module').then(
+        (m) => m.CheckoutPageModule,
+      ),
+  },
+  // P10 - Mis compras
+  {
+    path: 'comprador/purchases',
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: UserRole.COMPRADOR },
+    loadChildren: () =>
+      import('./comprador/purchases/purchases.module').then(
+        (m) => m.PurchasesPageModule,
+      ),
+  },
 ];
 
 @NgModule({
