@@ -2,6 +2,13 @@ ion-checkbox {
   white-space: normal;
 }
 
+.authorization-item {
+  --background: transparent !important;
+  --border-color: transparent !important;
+  margin-top: 6px;
+  border: 0 !important;
+}
+
 .error {
   font-size: 0.85rem;
   margin: 8px 16px 0;

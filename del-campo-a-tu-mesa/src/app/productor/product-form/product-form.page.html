@@ -8,7 +8,14 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="form" (ngSubmit)="save()">
+  <main class="content-shell form-shell">
+    <header class="form-intro motion-enter">
+      <p class="eyebrow">Hecho en tu finca</p>
+      <p class="page-copy">Cuenta qué ofreces, cuánto tienes y dónde pueden encontrarte.</p>
+    </header>
+
+    <section class="form-panel motion-enter">
+      <form [formGroup]="form" (ngSubmit)="save()">
     <ion-item>
       <ion-input
         label="Nombre"
@@ -46,11 +53,11 @@
     </ion-item>
 
     <ion-item>
-      <ion-select label="Categoría" formControlName="category">
-        <ion-select-option *ngFor="let category of categories" [value]="category">
-          {{ category }}
-        </ion-select-option>
-      </ion-select>
+        <ion-select label="Categoría" formControlName="category">
+          @for (category of categories; track category) {
+            <ion-select-option [value]="category">{{ category }}</ion-select-option>
+          }
+        </ion-select>
     </ion-item>
 
     <ion-item>
@@ -66,39 +73,45 @@
     <div class="photo-section">
       <p class="photo-title">Foto del producto (opcional)</p>
 
-      <img
-        *ngIf="form.value.photoUrl"
-        [src]="form.value.photoUrl"
-        class="photo-preview"
-        alt="Foto del producto"
-      />
+      @if (form.value.photoUrl) {
+        <img
+          [src]="form.value.photoUrl"
+          class="photo-preview"
+          alt="Foto del producto"
+        />
+      }
 
       <div class="photo-actions">
-        <ion-button fill="outline" (click)="takePhoto()">
+        <ion-button type="button" fill="outline" (click)="openPhotoActions()">
           <ion-icon name="camera-outline" slot="start"></ion-icon>
-          Tomar foto
+          Añadir foto
         </ion-button>
-        <ion-button fill="outline" (click)="chooseFromGallery()">
-          <ion-icon name="image-outline" slot="start"></ion-icon>
-          Galería
-        </ion-button>
-        <ion-button
-          *ngIf="form.value.photoUrl"
-          fill="clear"
-          color="danger"
-          (click)="removePhoto()"
-        >
-          Quitar
-        </ion-button>
+        @if (form.value.photoUrl) {
+          <ion-button fill="clear" color="danger" (click)="removePhoto()">
+            Quitar
+          </ion-button>
+        }
       </div>
     </div>
 
-    <ion-text color="danger" *ngIf="form.touched && form.invalid">
-      <p class="error">Completa todos los campos obligatorios.</p>
-    </ion-text>
+    @if (form.touched && form.invalid) {
+      <ion-text color="danger">
+        <p class="error">Completa todos los campos obligatorios.</p>
+      </ion-text>
+    }
 
-    <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="saving">
-      Guardar
-    </ion-button>
-  </form>
+        <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="saving">
+          <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+          Guardar producto
+        </ion-button>
+      </form>
+    </section>
+    <ion-action-sheet
+      [isOpen]="photoActionsOpen"
+      header="Añadir foto del producto"
+      subHeader="Elige cómo quieres agregarla"
+      [buttons]="photoActionButtons"
+      (didDismiss)="photoActionsOpen = false"
+    ></ion-action-sheet>
+  </main>
 </ion-content>

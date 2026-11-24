@@ -8,63 +8,66 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="form" (ngSubmit)="save()">
-    <ion-item>
-      <ion-input
-        label="Nombre o finca"
-        labelPlacement="floating"
-        type="text"
-        formControlName="name"
-      ></ion-input>
-    </ion-item>
+  <main class="content-shell form-shell">
+    <header class="form-intro motion-enter">
+      <p class="eyebrow">Tu historia también hace parte de la cosecha</p>
+      <p class="page-copy">Actualiza tu ubicación y el medio por el que quieres recibir pedidos.</p>
+    </header>
 
-    <ion-item>
-      <ion-input
-        label="Ubicación (municipio / vereda)"
-        labelPlacement="floating"
-        type="text"
-        formControlName="location"
-      ></ion-input>
-    </ion-item>
+    <section class="form-panel motion-enter">
+      <form [formGroup]="form" (ngSubmit)="save()">
+        <ion-item>
+          <ion-input
+            label="Nombre o finca"
+            labelPlacement="floating"
+            type="text"
+            formControlName="name"
+          ></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-select label="Medio de contacto" formControlName="contactType">
-        <ion-select-option
-          *ngFor="let type of contactTypes"
-          [value]="type.value"
-        >
-          {{ type.label }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
+        <ion-item>
+          <ion-input
+            label="Ubicación (municipio / vereda)"
+            labelPlacement="floating"
+            type="text"
+            formControlName="location"
+          ></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-input
-        [label]="form.value.contactType === 'email' ? 'Correo electrónico' : 'Número de celular (con 57)'"
-        labelPlacement="floating"
-        [type]="form.value.contactType === 'email' ? 'email' : 'tel'"
-        formControlName="contactValue"
-      ></ion-input>
-    </ion-item>
+        <ion-item>
+          <ion-select label="Medio de contacto" formControlName="contactType">
+            @for (type of contactTypes; track type.value) {
+              <ion-select-option [value]="type.value">{{ type.label }}</ion-select-option>
+            }
+          </ion-select>
+        </ion-item>
 
-    <ion-item lines="none" class="ion-margin-top">
-      <ion-checkbox formControlName="authorizeContact" labelPlacement="end">
-        Autorizo mostrar este medio de contacto a los compradores (Ley 1581 de
-        2012).
-      </ion-checkbox>
-    </ion-item>
+        <ion-item>
+          <ion-input
+            [label]="form.value.contactType === 'email' ? 'Correo electrónico' : 'Número de celular (con 57)'"
+            labelPlacement="floating"
+            [type]="form.value.contactType === 'email' ? 'email' : 'tel'"
+            formControlName="contactValue"
+          ></ion-input>
+        </ion-item>
 
-    <ion-text color="danger" *ngIf="form.touched && form.invalid">
-      <p class="error">Completa todos los campos y acepta la autorización.</p>
-    </ion-text>
+        <ion-item lines="none" class="authorization-item">
+          <ion-checkbox formControlName="authorizeContact" labelPlacement="end">
+            Autorizo mostrar este medio de contacto a los compradores (Ley 1581 de 2012).
+          </ion-checkbox>
+        </ion-item>
 
-    <ion-button
-      expand="block"
-      type="submit"
-      class="ion-margin-top"
-      [disabled]="saving"
-    >
-      Guardar perfil
-    </ion-button>
-  </form>
+        @if (form.touched && form.invalid) {
+          <ion-text color="danger">
+            <p class="error">Completa todos los campos y acepta la autorización.</p>
+          </ion-text>
+        }
+
+        <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="saving">
+          <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+          Guardar perfil
+        </ion-button>
+      </form>
+    </section>
+  </main>
 </ion-content>

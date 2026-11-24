@@ -1,52 +1,75 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Mis productos</ion-title>
+    <ion-title>Mi cosecha</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="goToProfile()">
+      <ion-button aria-label="Mi perfil" title="Mi perfil" (click)="goToProfile()">
         <ion-icon name="person-circle-outline" slot="icon-only"></ion-icon>
       </ion-button>
-      <ion-button (click)="logout()">
+      <ion-button aria-label="Cerrar sesión" title="Cerrar sesión" (click)="logout()">
         <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-list *ngIf="products.length > 0">
-    <ion-item-sliding *ngFor="let product of products">
-      <ion-item>
-        <ion-thumbnail slot="start" *ngIf="product.photoUrl">
-          <img [src]="product.photoUrl" [alt]="product.name" />
-        </ion-thumbnail>
-        <ion-label>
-          <h2>{{ product.name }}</h2>
-          <p>
-            ${{ product.price }} · {{ product.quantityAvailable }} disponibles
-          </p>
-        </ion-label>
-        <ion-button slot="end" fill="clear" (click)="edit(product)">
-          <ion-icon name="create-outline" slot="icon-only"></ion-icon>
-        </ion-button>
-      </ion-item>
-      <ion-item-options side="end">
-        <ion-item-option color="primary" (click)="edit(product)"
-          >Editar</ion-item-option
-        >
-        <ion-item-option color="danger" (click)="deactivate(product)"
-          >Desactivar</ion-item-option
-        >
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+<ion-content class="ion-padding producer-content">
+  <main class="content-shell producer-shell">
+    <header class="producer-intro motion-enter">
+      <p class="eyebrow">Tu puesto campesino</p>
+      <h1 class="page-heading">Lo que tienes para ofrecer</h1>
+      <p class="page-copy">Mantén tu cosecha al día y conecta con nuevos compradores.</p>
+      <div class="producer-summary">
+        <strong>{{ products.length }}</strong>
+        <span>{{ products.length === 1 ? 'producto publicado' : 'productos publicados' }}</span>
+      </div>
+    </header>
 
-  <div class="empty-state" *ngIf="!loading && products.length === 0">
-    <ion-icon name="basket-outline"></ion-icon>
-    <p>Aún no has publicado productos.</p>
-  </div>
+    @if (products.length > 0) {
+      <ion-list class="producer-list">
+        @for (product of products; track product.id) {
+          <ion-item-sliding>
+            <ion-item>
+              <ion-thumbnail slot="start" class="producer-thumbnail">
+                @if (product.photoUrl) {
+                  <img [src]="product.photoUrl" [alt]="product.name" loading="lazy" />
+                } @else {
+                  <ion-icon name="leaf-outline" aria-hidden="true"></ion-icon>
+                }
+              </ion-thumbnail>
+              <ion-label>
+                <div class="producer-product-meta">
+                  <ion-badge [color]="product.active ? 'success' : 'medium'">
+                    {{ product.active ? 'Disponible' : 'Desactivado' }}
+                  </ion-badge>
+                  <span>{{ product.category }}</span>
+                </div>
+                <h2>{{ product.name }}</h2>
+                <p>${{ product.price }} · {{ product.quantityAvailable }} disponibles</p>
+              </ion-label>
+              <ion-button slot="end" fill="clear" aria-label="Editar producto" (click)="edit(product)">
+                <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+              </ion-button>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option color="primary" (click)="edit(product)">Editar</ion-item-option>
+              <ion-item-option color="danger" (click)="deactivate(product)">Desactivar</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        }
+      </ion-list>
+    }
+
+    @if (!loading && products.length === 0) {
+      <div class="empty-state motion-enter">
+        <span class="empty-icon"><ion-icon name="basket-outline"></ion-icon></span>
+        <h2>Tu puesto empieza aquí</h2>
+        <p>Publica tu primer producto y haz que llegue a más compradores.</p>
+      </div>
+    }
+  </main>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="publish()">
+    <ion-fab-button aria-label="Publicar producto" (click)="publish()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

@@ -7,52 +7,73 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-item>
-    <ion-select label="Categoría" placeholder="Todas" [(ngModel)]="category">
-      <ion-select-option [value]="undefined">Todas</ion-select-option>
-      <ion-select-option *ngFor="let item of categories" [value]="item">
-        {{ item }}
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
+<ion-content class="ion-padding filters-content">
+  <main class="content-shell form-shell">
+    <header class="form-intro motion-enter">
+      <p class="eyebrow">Busca a tu manera</p>
+      <h1 class="page-heading">Ajusta tu búsqueda</h1>
+      <p class="page-copy">Acerca la cosecha a tu ubicación y al precio que necesitas.</p>
+    </header>
 
-  <ion-item>
-    <ion-input
-      label="Ubicación (municipio)"
-      labelPlacement="floating"
-      type="text"
-      placeholder="Ej: Tunja"
-      [(ngModel)]="location"
-    ></ion-input>
-  </ion-item>
+    <section class="form-panel motion-enter">
+      <ion-item>
+        <ion-select label="Categoría" placeholder="Todas" [(ngModel)]="category">
+          <ion-select-option [value]="undefined">Todas</ion-select-option>
+          @for (item of categories; track item) {
+            <ion-select-option [value]="item">{{ item }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
 
-  <ion-item>
-    <ion-input
-      label="Precio mínimo"
-      labelPlacement="floating"
-      type="number"
-      inputmode="numeric"
-      [(ngModel)]="minPrice"
-    ></ion-input>
-  </ion-item>
+      <ion-item>
+        <ion-input
+          label="Municipio o vereda"
+          labelPlacement="floating"
+          type="text"
+          placeholder="Ej.: Tunja"
+          [(ngModel)]="location"
+        ></ion-input>
+      </ion-item>
 
-  <ion-item>
-    <ion-input
-      label="Precio máximo"
-      labelPlacement="floating"
-      type="number"
-      inputmode="numeric"
-      [(ngModel)]="maxPrice"
-    ></ion-input>
-  </ion-item>
+      <div class="price-fields">
+        <ion-item>
+          <ion-input
+            label="Precio mínimo (COP)"
+            labelPlacement="floating"
+            type="number"
+            inputmode="numeric"
+            min="0"
+            [(ngModel)]="minPrice"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input
+            label="Precio máximo (COP)"
+            labelPlacement="floating"
+            type="number"
+            inputmode="numeric"
+            min="0"
+            [(ngModel)]="maxPrice"
+          ></ion-input>
+        </ion-item>
+      </div>
 
-  <ion-text color="danger" *ngIf="errorMessage">
-    <p class="error">{{ errorMessage }}</p>
-  </ion-text>
+      @if (errorMessage) {
+        <ion-text color="danger">
+          <p class="error">{{ errorMessage }}</p>
+        </ion-text>
+      }
 
-  <div class="actions">
-    <ion-button expand="block" fill="outline" (click)="clear()">Limpiar</ion-button>
-    <ion-button expand="block" (click)="apply()">Aplicar</ion-button>
-  </div>
+      <div class="actions">
+        <ion-button expand="block" fill="outline" (click)="clear()">
+          <ion-icon name="refresh-outline" slot="start"></ion-icon>
+          Limpiar
+        </ion-button>
+        <ion-button expand="block" (click)="apply()">
+          <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+          Aplicar
+        </ion-button>
+      </div>
+    </section>
+  </main>
 </ion-content>

@@ -4,83 +4,106 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-segment [value]="mode" (ionChange)="setMode($event.detail.value)">
-    <ion-segment-button value="login">
-      <ion-label>Iniciar sesión</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="register">
-      <ion-label>Registrarme</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+<ion-content class="ion-padding auth-content">
+  <main class="content-shell form-shell">
+    <header class="form-intro motion-enter">
+      <span class="form-brand"><ion-icon name="leaf"></ion-icon> Mercado campesino</span>
+      <p class="eyebrow">Compra cerca. Apoya lo nuestro.</p>
+      <h1 class="page-heading">Un mercado con raíces</h1>
+      <p class="page-copy">Entra para descubrir productos frescos o compartir lo que cultivas.</p>
+    </header>
 
-  <form [formGroup]="form" (ngSubmit)="submit()" class="ion-margin-top">
-    <ion-item *ngIf="mode === 'register'">
-      <ion-input
-        label="Nombre"
-        labelPlacement="floating"
-        type="text"
-        formControlName="name"
-      ></ion-input>
-    </ion-item>
+    <section class="form-panel motion-enter">
+      @if (mode !== 'recover') {
+        <ion-segment [value]="mode" (ionChange)="setMode($event.detail.value)">
+          <ion-segment-button value="login">
+            <ion-label>Iniciar sesión</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="register">
+            <ion-label>Crear cuenta</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      }
 
-    <ion-item>
-      <ion-input
-        label="Correo electrónico"
-        labelPlacement="floating"
-        type="email"
-        formControlName="email"
-      ></ion-input>
-    </ion-item>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        @if (mode === 'register') {
+          <ion-item>
+            <ion-input
+              label="Nombre"
+              labelPlacement="floating"
+              type="text"
+              formControlName="name"
+            ></ion-input>
+          </ion-item>
+        }
 
-    <ion-item>
-      <ion-input
-        [label]="mode === 'recover' ? 'Nueva contraseña' : 'Contraseña'"
-        labelPlacement="floating"
-        type="password"
-        formControlName="password"
-      ></ion-input>
-    </ion-item>
+        <ion-item>
+          <ion-input
+            label="Correo electrónico"
+            labelPlacement="floating"
+            type="email"
+            formControlName="email"
+          ></ion-input>
+        </ion-item>
 
-    <ion-text color="danger" *ngIf="errorMessage">
-      <p class="ion-padding-top">{{ errorMessage }}</p>
-    </ion-text>
+        <ion-item>
+          <ion-input
+            [label]="mode === 'recover' ? 'Nueva contraseña' : 'Contraseña'"
+            labelPlacement="floating"
+            type="password"
+            formControlName="password"
+          ></ion-input>
+        </ion-item>
 
-    <ion-text color="success" *ngIf="successMessage">
-      <p class="ion-padding-top">{{ successMessage }}</p>
-    </ion-text>
+        @if (errorMessage) {
+          <ion-text color="danger">
+            <p class="ion-padding-top">{{ errorMessage }}</p>
+          </ion-text>
+        }
 
-    <ion-button
-      expand="block"
-      type="submit"
-      class="ion-margin-top"
-      [disabled]="form.invalid || loading"
-    >
-      <ng-container *ngIf="mode === 'login'">Continuar</ng-container>
-      <ng-container *ngIf="mode === 'register'">Crear cuenta</ng-container>
-      <ng-container *ngIf="mode === 'recover'"
-        >Actualizar contraseña</ng-container
-      >
-    </ion-button>
+        @if (successMessage) {
+          <ion-text color="success">
+            <p class="ion-padding-top">{{ successMessage }}</p>
+          </ion-text>
+        }
 
-    <ion-button
-      *ngIf="mode !== 'recover'"
-      expand="block"
-      fill="clear"
-      size="small"
-      (click)="setMode('recover')"
-    >
-      ¿Olvidaste tu contraseña?
-    </ion-button>
+        <ion-button
+          expand="block"
+          type="submit"
+          class="ion-margin-top"
+          [disabled]="form.invalid || loading"
+        >
+          @if (mode === 'login') {
+            Continuar
+          } @else if (mode === 'register') {
+            Crear cuenta
+          } @else {
+            Actualizar contraseña
+          }
+        </ion-button>
 
-    <ion-button
-      *ngIf="mode === 'recover'"
-      expand="block"
-      fill="clear"
-      size="small"
-      (click)="setMode('login')"
-    >
-      Volver a iniciar sesión
-    </ion-button>
-  </form>
+        @if (mode !== 'recover') {
+          <ion-button
+            expand="block"
+            fill="clear"
+            size="small"
+            (click)="setMode('recover')"
+          >
+            ¿Olvidaste tu contraseña?
+          </ion-button>
+        }
+
+        @if (mode === 'recover') {
+          <ion-button
+            expand="block"
+            fill="clear"
+            size="small"
+            (click)="setMode('login')"
+          >
+            Volver a iniciar sesión
+          </ion-button>
+        }
+      </form>
+    </section>
+  </main>
 </ion-content>
