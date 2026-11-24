@@ -7,23 +7,38 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" *ngIf="producer">
-  <div class="producer-info">
-    <ion-icon name="person-circle-outline" class="producer-avatar"></ion-icon>
-    <h2>{{ producer.name }}</h2>
-    <p>{{ producer.location }}</p>
-  </div>
+@if (producer) {
+  <ion-content class="ion-padding">
+    <main class="content-shell contact-shell motion-enter">
+      <section class="contact-panel">
+        <span class="contact-avatar"><ion-icon name="person-outline"></ion-icon></span>
+        <p class="eyebrow">Conexión directa</p>
+        <h1 class="page-heading">{{ producer.name }}</h1>
+        <p class="producer-location">
+          <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
+          {{ producer.location }}
+        </p>
 
-  <ion-button
-    *ngIf="producer.contactMethod"
-    expand="block"
-    (click)="openContact()"
-  >
-    <ion-icon [name]="contactIcon" slot="start"></ion-icon>
-    {{ contactLabel }}
-  </ion-button>
+        <div class="contact-divider"></div>
 
-  <ion-text color="medium" *ngIf="!producer.contactMethod">
-    <p>El productor no ha autorizado un medio de contacto.</p>
-  </ion-text>
-</ion-content>
+        @if (producer.contactMethod) {
+          <ion-button expand="block" (click)="openContact()">
+            <ion-icon [name]="contactIcon" slot="start"></ion-icon>
+            {{ contactLabel }}
+          </ion-button>
+        } @else {
+          <div class="contact-unavailable">
+            <ion-icon name="lock-closed-outline" aria-hidden="true"></ion-icon>
+            <p>El productor no ha autorizado un medio de contacto.</p>
+          </div>
+        }
+
+        @if (producer.contactMethod) {
+          <p class="contact-note">
+            Al contactar, estarás hablando directamente con quien cultiva este producto.
+          </p>
+        }
+      </section>
+    </main>
+  </ion-content>
+}

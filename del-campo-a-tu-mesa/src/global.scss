@@ -25,13 +25,338 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
+* {
+	box-sizing: border-box;
+}
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+body {
+	font-family: var(--field-font-body);
+	color: var(--field-ink);
+}
+
+ion-content {
+	--background: var(--field-canvas);
+}
+
+ion-toolbar {
+	--background: var(--field-canvas);
+	--color: var(--field-ink);
+	--border-color: var(--field-line);
+}
+
+ion-title {
+	font-family: var(--field-font-display);
+	font-weight: 700;
+}
+
+ion-button {
+	--border-radius: 8px;
+	font-weight: 700;
+	letter-spacing: 0;
+}
+
+ion-card {
+	margin: 0;
+	border: 1px solid var(--field-line);
+	border-radius: 8px;
+	box-shadow: 0 8px 24px rgb(34 56 39 / 7%);
+}
+
+.content-shell {
+	width: min(100%, 1120px);
+	margin-inline: auto;
+}
+
+.eyebrow {
+	color: var(--field-green);
+	font-size: 0.75rem;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.page-heading {
+	margin: 0;
+	color: var(--field-ink);
+	font-family: var(--field-font-display);
+	font-size: 1.65rem;
+	font-weight: 700;
+	line-height: 1.15;
+}
+
+.page-copy {
+	color: var(--field-muted);
+	line-height: 1.55;
+}
+
+.form-shell {
+	width: min(100%, 680px);
+	margin-inline: auto;
+	padding: 18px 0 36px;
+}
+
+.form-intro {
+	margin-bottom: 20px;
+}
+
+.form-intro .eyebrow {
+	margin: 0 0 10px;
+}
+
+.form-intro .page-copy {
+	max-width: 520px;
+	margin: 10px 0 0;
+}
+
+.form-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 18px;
+	color: var(--field-green);
+	font-size: 0.88rem;
+	font-weight: 800;
+}
+
+.form-brand ion-icon {
+	font-size: 1.2rem;
+}
+
+.form-panel {
+	padding: clamp(16px, 4vw, 28px);
+	border: 1px solid var(--field-line);
+	border-radius: 8px;
+	background: var(--field-surface);
+}
+
+.form-panel ion-item {
+	--background: transparent;
+	--border-color: transparent;
+	--highlight-color-focused: var(--field-green);
+	margin-bottom: 10px;
+	border: 1px solid var(--field-line);
+	border-radius: 6px;
+}
+
+.form-panel ion-segment {
+	--background: var(--ion-color-light);
+	margin-bottom: 18px;
+}
+
+.form-panel ion-input,
+.form-panel ion-textarea,
+.form-panel ion-select {
+	--highlight-color-focused: var(--field-green);
+}
+
+.product-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+	gap: 14px;
+}
+
+.product-card {
+	overflow: hidden;
+	--background: var(--field-surface);
+}
+
+.product-image,
+.skeleton-image {
+	display: grid;
+	width: 100%;
+	aspect-ratio: 1.55;
+	place-items: center;
+	overflow: hidden;
+	background: var(--ion-color-light);
+	color: var(--field-leaf);
+	font-size: 2.6rem;
+}
+
+.product-image {
+	position: relative;
+}
+
+.country-stamp {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 6px 9px;
+	border: 1px solid var(--field-line);
+	border-radius: 4px;
+	background: var(--field-surface);
+	box-shadow: 0 2px 6px rgb(34 56 39 / 16%);
+	color: var(--field-green);
+	font-size: 0.68rem;
+	font-weight: 800;
+}
+
+.product-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 320ms ease;
+}
+
+.product-card:hover .product-image img {
+	transform: scale(1.04);
+}
+
+.product-card ion-card-header {
+	padding: 14px 14px 4px;
+}
+
+.product-meta {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	margin-bottom: 8px;
+	color: var(--field-muted);
+	font-size: 0.72rem;
+}
+
+.product-meta ion-badge {
+	max-width: 60%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.product-card ion-card-title {
+	color: var(--field-ink);
+	font-family: var(--field-font-display);
+	font-size: 1.15rem;
+	font-weight: 700;
+}
+
+.product-card ion-card-content {
+	padding: 8px 14px 14px;
+}
+
+.product-price {
+	margin: 0 0 7px;
+	color: var(--field-green);
+	font-size: 1.25rem;
+	font-weight: 800;
+}
+
+.product-price span {
+	font-size: 0.68rem;
+	font-weight: 700;
+}
+
+.product-location {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin: 0;
+	color: var(--field-muted);
+	font-size: 0.8rem;
+}
+
+.product-skeleton {
+	padding-bottom: 10px;
+}
+
+.product-skeleton ion-card-header ion-skeleton-text {
+	height: 12px;
+}
+
+.empty-state {
+	display: flex;
+	min-height: 310px;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 32px 16px;
+	color: var(--ion-color-medium);
+	text-align: center;
+}
+
+.empty-state h2 {
+	max-width: 360px;
+	margin: 18px 0 8px;
+	color: var(--field-ink);
+	font-family: var(--field-font-display);
+	font-size: 1.35rem;
+}
+
+.empty-state p {
+	max-width: 400px;
+	margin: 0 0 14px;
+	line-height: 1.5;
+}
+
+.empty-icon {
+	display: grid;
+	width: 66px;
+	aspect-ratio: 1;
+	place-items: center;
+	border-radius: 50%;
+	background: var(--ion-color-light);
+	color: var(--field-green);
+	font-size: 2rem;
+}
+
+.motion-enter {
+	animation: field-rise-in 520ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+@keyframes field-rise-in {
+	from {
+		opacity: 0;
+		transform: translateY(14px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		scroll-behavior: auto !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+@media (max-width: 520px) {
+	.product-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 10px;
+	}
+
+	.product-card ion-card-header {
+		padding: 11px 10px 4px;
+	}
+
+	.product-card ion-card-content {
+		padding: 7px 10px 12px;
+	}
+
+	.product-card ion-card-title {
+		font-size: 1rem;
+	}
+
+	.product-meta {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 5px;
+	}
+
+	.product-meta ion-badge {
+		max-width: 100%;
+	}
+
+	.product-location {
+		align-items: flex-start;
+		font-size: 0.72rem;
+	}
+}

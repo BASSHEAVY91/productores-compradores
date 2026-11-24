@@ -7,25 +7,49 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" *ngIf="product">
-  <img
-    *ngIf="product.photoUrl"
-    [src]="product.photoUrl"
-    class="product-photo"
-    alt="{{ product.name }}"
-  />
+@if (product) {
+  <ion-content class="ion-padding detail-content">
+    <main class="content-shell detail-shell motion-enter">
+      <div class="detail-photo" [class.no-photo]="!product.photoUrl">
+        @if (product.photoUrl) {
+          <img [src]="product.photoUrl" [alt]="product.name" />
+        } @else {
+          <ion-icon name="leaf-outline" aria-hidden="true"></ion-icon>
+        }
+      </div>
 
-  <h1>{{ product.name }}</h1>
-  <p class="price">${{ product.price }}</p>
-  <p>Cantidad disponible: {{ product.quantityAvailable }}</p>
-  <p>Ubicación: {{ product.location }}</p>
-  <p>Categoría: {{ product.category }}</p>
+    <section class="detail-copy">
+      <div class="detail-labels">
+        <ion-badge color="success">{{ product.category }}</ion-badge>
+        <span class="detail-origin">
+          <ion-icon name="earth-outline" aria-hidden="true"></ion-icon>
+          Origen Colombia
+        </span>
+      </div>
+      <h1 class="page-heading">{{ product.name }}</h1>
+      <p class="detail-price">${{ product.price }} <span>COP</span></p>
 
-  <ion-text>
-    <p>{{ product.description }}</p>
-  </ion-text>
+      <div class="detail-facts">
+        <div>
+          <ion-icon name="cube-outline" aria-hidden="true"></ion-icon>
+          <span>{{ product.quantityAvailable }} disponibles</span>
+        </div>
+        <div>
+          <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
+          <span>{{ product.location }} · Colombia</span>
+        </div>
+      </div>
 
-  <ion-button expand="block" (click)="contactProducer()">
-    Contactar productor
-  </ion-button>
-</ion-content>
+      <div class="detail-description">
+        <h2>Sobre este producto</h2>
+        <p>{{ product.description }}</p>
+      </div>
+
+      <ion-button expand="block" (click)="contactProducer()">
+        <ion-icon name="chatbubbles-outline" slot="start"></ion-icon>
+        Contactar productor
+      </ion-button>
+    </section>
+    </main>
+  </ion-content>
+}

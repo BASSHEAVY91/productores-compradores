@@ -4,28 +4,43 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <div class="role-cards">
-    <ion-card button (click)="selectRole(UserRole.PRODUCTOR)">
-      <ion-card-header>
-        <ion-icon name="leaf-outline" class="role-icon"></ion-icon>
-        <ion-card-title>Soy Productor</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        Publica tus productos agrícolas: nombre, precio, cantidad y ubicación.
-      </ion-card-content>
-    </ion-card>
+<ion-content class="ion-padding role-content">
+  <main class="content-shell role-shell">
+    <header class="form-intro motion-enter">
+      <p class="eyebrow">Cada cosecha necesita su camino</p>
+      <h1 class="page-heading">¿Cómo quieres participar?</h1>
+      <p class="page-copy">Puedes cambiar tu perfil más adelante.</p>
+    </header>
 
-    <ion-card button (click)="selectRole(UserRole.COMPRADOR)">
-      <ion-card-header>
-        <ion-icon name="basket-outline" class="role-icon"></ion-icon>
-        <ion-card-title>Soy Comprador</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        Busca productos frescos y contacta directamente al productor.
-      </ion-card-content>
-    </ion-card>
-  </div>
+    <div class="role-cards">
+      <ion-card button class="role-card motion-enter" (click)="selectRole(UserRole.PRODUCTOR)">
+        <ion-card-header>
+          <span class="role-icon-wrap"><ion-icon name="leaf-outline" class="role-icon"></ion-icon></span>
+          <ion-card-title>Soy productor</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Publica lo que cultivas y contacta directamente con compradores.
+          <span class="role-link">Ofrecer productos <ion-icon name="arrow-forward-outline"></ion-icon></span>
+        </ion-card-content>
+      </ion-card>
 
-  <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+      <ion-card button class="role-card motion-enter" (click)="selectRole(UserRole.COMPRADOR)">
+        <ion-card-header>
+          <span class="role-icon-wrap buyer"><ion-icon name="basket-outline" class="role-icon"></ion-icon></span>
+          <ion-card-title>Soy comprador</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Encuentra alimentos frescos de fincas y familias de la región.
+          <span class="role-link">Explorar cosecha <ion-icon name="arrow-forward-outline"></ion-icon></span>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    @if (loading) {
+      <div class="role-loading" aria-live="polite">
+        <ion-spinner name="crescent"></ion-spinner>
+        <span>Preparando tu mercado...</span>
+      </div>
+    }
+  </main>
 </ion-content>

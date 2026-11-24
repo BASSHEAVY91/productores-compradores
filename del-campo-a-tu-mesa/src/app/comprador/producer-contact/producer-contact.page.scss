@@ -1,9 +1,56 @@
-.producer-info {
-  text-align: center;
-  margin-bottom: 24px;
+.contact-shell {
+  display: grid;
+  min-height: min(72svh, 700px);
+  place-items: center;
+}
 
-  .producer-avatar {
-    font-size: 72px;
-    color: var(--ion-color-medium);
-  }
+.contact-panel {
+  width: min(100%, 520px);
+  padding: clamp(24px, 6vw, 48px);
+  border: 1px solid var(--field-line);
+  border-radius: 8px;
+  background: var(--field-surface);
+  text-align: center;
+}
+
+.contact-avatar {
+  display: grid;
+  width: 76px;
+  aspect-ratio: 1;
+  place-items: center;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: var(--ion-color-light);
+  color: var(--field-green);
+  font-size: 2rem;
+}
+
+.contact-panel .eyebrow {
+  margin: 0 0 8px;
+}
+
+.producer-location {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--field-muted);
+}
+
+.contact-divider {
+  height: 1px;
+  margin: 24px 0;
+  background: var(--field-line);
+}
+
+.contact-note,
+.contact-unavailable {
+  color: var(--field-muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.contact-unavailable ion-icon {
+  color: var(--field-guava);
+  font-size: 1.4rem;
 }

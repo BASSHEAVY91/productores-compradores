@@ -1,6 +1,5 @@
 .photo-section {
   margin: 16px 0 8px;
-  padding: 0 16px;
 }
 
 .photo-title {
@@ -23,6 +22,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.photo-actions ion-button {
+  flex: 1 1 140px;
 }
 
 .error {

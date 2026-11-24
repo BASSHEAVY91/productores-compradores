@@ -16,6 +16,12 @@ export class ProductFormPage implements OnInit {
   readonly categories = Object.values(ProductCategory);
   editingProduct: Product | null = null;
   saving = false;
+  photoActionsOpen = false;
+  readonly photoActionButtons = [
+    { text: 'Tomar una foto', icon: 'camera-outline', handler: () => void this.takePhoto() },
+    { text: 'Elegir de la galería', icon: 'image-outline', handler: () => void this.chooseFromGallery() },
+    { text: 'Cancelar', role: 'cancel' },
+  ];
 
   form: FormGroup = this.fb.group({
     name: ['', Validators.required],
@@ -43,6 +49,10 @@ export class ProductFormPage implements OnInit {
 
   async chooseFromGallery(): Promise<void> {
     this.setPhoto(await this.photoService.chooseFromGallery());
+  }
+
+  openPhotoActions(): void {
+    this.photoActionsOpen = true;
   }
 
   removePhoto(): void {

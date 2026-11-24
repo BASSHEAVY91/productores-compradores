@@ -1,13 +1,93 @@
 .empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 60%;
-  color: var(--ion-color-medium);
+  min-height: 340px;
+}
 
-  ion-icon {
-    font-size: 64px;
-    margin-bottom: 8px;
+.producer-shell {
+  padding-bottom: 88px;
+}
+
+.producer-intro {
+  padding: 18px 0 16px;
+}
+
+.producer-intro .eyebrow {
+  margin: 0 0 10px;
+}
+
+.producer-intro .page-copy {
+  max-width: 520px;
+  margin: 10px 0 16px;
+}
+
+.producer-summary {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  color: var(--field-muted);
+  font-size: 0.84rem;
+}
+
+.producer-summary strong {
+  color: var(--field-green);
+  font-family: var(--field-font-display);
+  font-size: 1.7rem;
+}
+
+.producer-list {
+  padding: 8px 0;
+  background: transparent;
+}
+
+.producer-list ion-item-sliding {
+  margin-bottom: 10px;
+  overflow: hidden;
+  border: 1px solid var(--field-line);
+  border-radius: 8px;
+  background: var(--field-surface);
+}
+
+.producer-list ion-item {
+  --background: var(--field-surface);
+  --padding-start: 10px;
+  --inner-padding-end: 8px;
+}
+
+.producer-thumbnail {
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: var(--ion-color-light);
+  color: var(--field-green);
+  font-size: 1.4rem;
+}
+
+.producer-thumbnail img {
+  object-fit: cover;
+}
+
+.producer-product-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+  color: var(--field-muted);
+  font-size: 0.72rem;
+}
+
+.producer-list ion-label h2 {
+  color: var(--field-ink);
+  font-family: var(--field-font-display);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.producer-list ion-label p {
+  color: var(--field-muted);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 520px) {
+  .producer-intro {
+    padding-top: 8px;
   }
 }

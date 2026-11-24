@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Catálogo</ion-title>
+    <ion-title>Del Campo a Tu Mesa</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="logout()">
+      <ion-button aria-label="Cerrar sesión" title="Cerrar sesión" (click)="logout()">
         <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -16,49 +16,122 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-button fill="outline" size="small" (click)="goToFilters()">
-    <ion-icon name="options-outline" slot="start"></ion-icon>
-    Filtros
-    <ion-badge *ngIf="filters.activeCount > 0" class="filter-count">
-      {{ filters.activeCount }}
-    </ion-badge>
-  </ion-button>
+<ion-content class="ion-padding catalog-content">
+  <main class="content-shell catalog-shell">
+    <header class="catalog-intro motion-enter">
+      <p class="eyebrow">Cosecha colombiana, trato directo</p>
+      <h1 class="page-heading">Productos de nuestra tierra</h1>
+      <p class="page-copy">
+        Alimentos campesinos de Colombia, con su origen, disponibilidad y precio a la vista.
+      </p>
+    </header>
 
-  <div class="categories">
-    <ion-chip
-      *ngFor="let category of categories"
-      [color]="isActiveCategory(category) ? 'primary' : undefined"
-      [outline]="!isActiveCategory(category)"
-      (click)="toggleCategory(category)"
-    >
-      <ion-icon *ngIf="isActiveCategory(category)" name="checkmark"></ion-icon>
-      <ion-label>{{ category }}</ion-label>
-    </ion-chip>
-  </div>
+    <div class="catalog-tools">
+      <ion-button fill="outline" size="small" (click)="goToFilters()">
+        <ion-icon name="options-outline" slot="start"></ion-icon>
+        Filtros
+        @if (filters.activeCount > 0) {
+          <ion-badge class="filter-count">{{ filters.activeCount }}</ion-badge>
+        }
+      </ion-button>
+      @if (!loading) {
+        <span class="result-count">{{ products.length }} productos</span>
+      }
+    </div>
 
-  <div class="active-filters" *ngIf="activeFiltersText">
-    <span>Filtrando por: {{ activeFiltersText }}</span>
-    <ion-button fill="clear" size="small" (click)="clearFilters()">Quitar filtros</ion-button>
-  </div>
+    <div class="categories" aria-label="Filtrar por categoría">
+      @for (category of categories; track category) {
+        <ion-chip
+          [color]="isActiveCategory(category) ? 'primary' : undefined"
+          [outline]="!isActiveCategory(category)"
+          [attr.aria-pressed]="isActiveCategory(category)"
+          (click)="toggleCategory(category)"
+        >
+          @if (isActiveCategory(category)) {
+            <ion-icon name="checkmark"></ion-icon>
+          }
+          <ion-label>{{ category }}</ion-label>
+        </ion-chip>
+      }
+    </div>
 
-  <ion-list>
-    <ion-item *ngFor="let product of products" button (click)="openDetail(product)">
-      <ion-thumbnail slot="start" *ngIf="product.photoUrl">
-        <img [src]="product.photoUrl" [alt]="product.name" />
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ product.name }}</h2>
-        <p>${{ product.price }} · {{ product.location }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+    @if (activeFiltersText) {
+      <div class="active-filters">
+        <span><ion-icon name="location-outline"></ion-icon> {{ activeFiltersText }}</span>
+        <ion-button fill="clear" size="small" (click)="clearFilters()">Quitar filtros</ion-button>
+      </div>
+    }
 
-  <div class="empty-state" *ngIf="!loading && products.length === 0">
-    <ion-icon name="search-outline"></ion-icon>
-    <p>No se encontraron productos.</p>
-    <ion-button fill="clear" *ngIf="filters.activeCount > 0" (click)="clearFilters()">
-      Quitar filtros
-    </ion-button>
-  </div>
+    @if (!loading && products.length > 0) {
+      <div class="product-grid">
+        @for (product of products; track product.id; let index = $index) {
+          <ion-card
+            button
+            class="product-card motion-enter"
+            [style.animation-delay.ms]="index * 55"
+            (click)="openDetail(product)"
+          >
+            <div class="product-image" [class.no-photo]="!product.photoUrl">
+              @if (product.photoUrl) {
+                <img
+                  [src]="product.photoUrl"
+                  [alt]="product.name"
+                  loading="lazy"
+                  decoding="async"
+                />
+              } @else {
+                <ion-icon name="leaf-outline" aria-hidden="true"></ion-icon>
+              }
+              <span class="country-stamp">
+                <ion-icon name="earth-outline" aria-hidden="true"></ion-icon>
+                Colombia
+              </span>
+            </div>
+            <ion-card-header>
+              <div class="product-meta">
+                <ion-badge color="success">{{ product.category }}</ion-badge>
+                <span>{{ product.quantityAvailable }} disponibles</span>
+              </div>
+              <ion-card-title>{{ product.name }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p class="product-price">${{ product.price }} <span>COP</span></p>
+              <p class="product-location">
+                <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
+                {{ product.location }}
+              </p>
+            </ion-card-content>
+          </ion-card>
+        }
+      </div>
+    }
+
+    @if (loading) {
+      <div class="product-grid" aria-label="Cargando productos">
+        @for (item of [1, 2, 3]; track item) {
+          <ion-card class="product-card product-skeleton">
+            <ion-skeleton-text animated class="skeleton-image"></ion-skeleton-text>
+            <ion-card-header>
+              <ion-skeleton-text animated style="width: 38%"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 72%"></ion-skeleton-text>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-skeleton-text animated style="width: 48%"></ion-skeleton-text>
+            </ion-card-content>
+          </ion-card>
+        }
+      </div>
+    }
+
+    @if (!loading && products.length === 0) {
+      <div class="empty-state motion-enter">
+        <span class="empty-icon"><ion-icon name="basket-outline"></ion-icon></span>
+        <h2>No encontramos cosecha con esos filtros</h2>
+        <p>Prueba otra categoría o amplía la búsqueda por ubicación y precio.</p>
+        @if (filters.activeCount > 0) {
+          <ion-button fill="outline" (click)="clearFilters()">Quitar filtros</ion-button>
+        }
+      </div>
+    }
+  </main>
 </ion-content>

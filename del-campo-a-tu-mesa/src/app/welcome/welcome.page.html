@@ -1,17 +1,48 @@
-<ion-content class="ion-padding">
-  <div class="welcome-container">
-    <ion-icon name="leaf-outline" class="welcome-logo"></ion-icon>
-    <h1>Del Campo a Tu Mesa</h1>
-    <p>
-      Conectamos directamente a productores campesinos con compradores que buscan
-      productos agrícolas frescos, sin intermediarios.
-    </p>
+<ion-content [fullscreen]="true" class="welcome-content">
+  <section class="welcome-hero">
+    <img
+      class="welcome-photo"
+      src="assets/cultivo-campo.jpg"
+      alt="Cultivos verdes en el campo colombiano"
+      fetchpriority="high"
+    />
+    <div class="welcome-shade"></div>
 
-    <ion-button expand="block" (click)="goToLogin()" color="primary">
-      Iniciar sesión
-    </ion-button>
-    <ion-button expand="block" (click)="goToLogin()" fill="outline" color="primary">
-      Registrarme
-    </ion-button>
-  </div>
+    <div class="welcome-copy motion-enter">
+      <div class="welcome-brand">
+        <span class="brand-mark"><ion-icon name="leaf"></ion-icon></span>
+        <span>Mercado campesino</span>
+      </div>
+      <p class="welcome-kicker">Fresco, local, de confianza</p>
+      <h1>Del campo<br />a tu mesa</h1>
+      <p class="welcome-description">
+        Productos de nuestra tierra, directo de quienes los cultivan.
+      </p>
+      <div class="welcome-actions">
+        <ion-button expand="block" color="secondary" (click)="goToLogin()">
+          <ion-icon name="basket-outline" slot="start"></ion-icon>
+          Explorar el mercado
+        </ion-button>
+        <ion-button expand="block" fill="clear" color="light" (click)="goToLogin()">
+          Ya tengo una cuenta
+        </ion-button>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="welcome-values" aria-label="Beneficios del mercado">
+    <div class="value-item">
+      <ion-icon name="leaf-outline" aria-hidden="true"></ion-icon>
+      <span>Origen local</span>
+    </div>
+    <div class="value-item">
+      <ion-icon name="people-outline" aria-hidden="true"></ion-icon>
+      <span>Trato directo</span>
+    </div>
+    <div class="value-item">
+      <ion-icon name="sunny-outline" aria-hidden="true"></ion-icon>
+      <span>Del día</span>
+    </div>
+  </section>
 </ion-content>
